@@ -9,7 +9,9 @@ export async function submitQuote(_prevState: QuoteState, formData: FormData): P
   const name = (formData.get("name") as string)?.trim()
   const email = (formData.get("email") as string)?.trim()
   const company = (formData.get("company") as string)?.trim()
+  const phone = (formData.get("phone") as string)?.trim()
   const product = formData.get("product") as string
+  const quantity = (formData.get("quantity") as string)?.trim()
   const message = (formData.get("message") as string)?.trim()
 
   if (!name || !email || !message) {
@@ -22,7 +24,15 @@ export async function submitQuote(_prevState: QuoteState, formData: FormData): P
   }
 
   // In production this would forward to an email service or CRM.
-  console.log("[v0] New quote request:", { name, email, company, product, message })
+  console.log("[v0] New quote request:", {
+    name,
+    email,
+    company,
+    phone,
+    product,
+    quantity,
+    message,
+  })
 
   return {
     success: true,

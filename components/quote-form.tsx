@@ -52,23 +52,47 @@ export function QuoteForm() {
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <Label htmlFor="name">Full name *</Label>
-          <Input id="name" name="name" placeholder="Jane Doe" required />
+          <Input id="name" name="name" placeholder="Jane Doe" required className="h-12 rounded-xl px-4" />
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="email">Work email *</Label>
-          <Input id="email" name="email" type="email" placeholder="jane@brand.com" required />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="jane@brand.com"
+            required
+            className="h-12 rounded-xl px-4"
+          />
         </div>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <Label htmlFor="company">Company</Label>
-          <Input id="company" name="company" placeholder="Your brand or label" />
+          <Input
+            id="company"
+            name="company"
+            placeholder="Your brand or label"
+            className="h-12 rounded-xl px-4"
+          />
         </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="phone">Phone / WhatsApp</Label>
+          <Input
+            id="phone"
+            name="phone"
+            placeholder="+1 234 567 890"
+            className="h-12 rounded-xl px-4"
+          />
+        </div>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <Label htmlFor="product">Product interest</Label>
           <Select name="product" defaultValue="Babies Wear">
-            <SelectTrigger id="product">
+            <SelectTrigger id="product" className="h-12 w-full rounded-xl px-4 text-sm">
               <SelectValue placeholder="Select a category" />
             </SelectTrigger>
             <SelectContent>
@@ -78,6 +102,15 @@ export function QuoteForm() {
               <SelectItem value="Private Label">Private label program</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="quantity">Estimated quantity</Label>
+          <Input
+            id="quantity"
+            name="quantity"
+            placeholder="e.g. 5,000 pieces / 2,400 pairs"
+            className="h-12 rounded-xl px-4"
+          />
         </div>
       </div>
 
@@ -89,6 +122,7 @@ export function QuoteForm() {
           rows={5}
           required
           placeholder="Tell us about your order: styles, quantities, target price, and timeline."
+          className="min-h-44 rounded-2xl px-4 py-3"
         />
       </div>
 
