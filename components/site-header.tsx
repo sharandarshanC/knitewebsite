@@ -61,7 +61,11 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button render={<Link href="/contact" />} nativeButton={false} className="rounded-full bg-brand-accent text-brand-accent-foreground hover:bg-brand-accent/90">
+          <Button
+            render={<Link href="/contact#quote-request" />}
+            nativeButton={false}
+            className="rounded-full bg-brand-accent text-brand-accent-foreground hover:bg-brand-accent/90"
+          >
             Request a Quote
           </Button>
         </div>
@@ -94,7 +98,10 @@ export function SiteHeader() {
                 </Link>
               )
             })}
-            <Button render={<Link href="/contact" />} className="mt-2 rounded-full bg-brand-accent text-brand-accent-foreground hover:bg-brand-accent/90">
+            <Button
+              render={<Link href="/contact#quote-request" onClick={() => setOpen(false)} />}
+              className="mt-2 rounded-full bg-brand-accent text-brand-accent-foreground hover:bg-brand-accent/90"
+            >
               Request a Quote
             </Button>
           </nav>

@@ -31,7 +31,7 @@ export function HomeHero() {
 
           <div className="reveal mt-10 flex flex-col gap-3 sm:flex-row">
             <Button
-              render={<Link href="/contact" />}
+              render={<Link href="/contact#quote-request" />}
               size="lg"
               className="rounded-full bg-brand text-brand-foreground hover:bg-brand/90"
             >

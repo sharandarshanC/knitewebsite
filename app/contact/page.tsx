@@ -190,7 +190,10 @@ export default function ContactPage() {
             </section>
           </div>
 
-          <section className="reveal rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-brand/10 lg:p-8 xl:p-10">
+          <section
+            id="quote-request"
+            className="reveal scroll-mt-24 rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-brand/10 lg:scroll-mt-28 lg:p-8 xl:p-10"
+          >
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand-accent">
                 Request a quote

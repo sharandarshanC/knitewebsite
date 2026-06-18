@@ -18,7 +18,7 @@ export function QuoteCta() {
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button
-              render={<Link href="/contact" />}
+              render={<Link href="/contact#quote-request" />}
               size="lg"
               className="rounded-full bg-brand-accent text-brand-accent-foreground hover:bg-brand-accent/90"
             >

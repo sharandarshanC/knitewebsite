@@ -1,8 +1,6 @@
 "use client"
 
-import { useActionState, useEffect, useRef } from "react"
-import { useFormStatus } from "react-dom"
-import { submitQuote, type QuoteState } from "@/app/contact/actions"
+import { type FormEvent, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -14,46 +12,87 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { CheckCircle2, AlertCircle, Send, Loader2 } from "lucide-react"
+import { AlertCircle, CheckCircle2, Loader2, Send } from "lucide-react"
 
-const initialState: QuoteState = { success: false, message: "" }
+type FormState = {
+  status: "idle" | "success" | "error"
+  message: string
+}
 
-function SubmitButton() {
-  const { pending } = useFormStatus()
-  return (
-    <Button
-      type="submit"
-      size="lg"
-      disabled={pending}
-      className="h-12 w-full gap-2 rounded-xl bg-brand-accent px-6 text-brand-accent-foreground hover:bg-brand-accent/90 sm:w-auto"
-    >
-      {pending ? (
-        <>
-          <Loader2 className="size-4 animate-spin" aria-hidden="true" />
-          Sending...
-        </>
-      ) : (
-        <>
-          <Send className="size-4" aria-hidden="true" />
-          Send request
-        </>
-      )}
-    </Button>
-  )
+const initialState: FormState = { status: "idle", message: "" }
+
+function encodeFormData(formData: FormData) {
+  return new URLSearchParams(
+    Array.from(formData.entries()).map(([key, value]) => [key, String(value)]),
+  ).toString()
 }
 
 export function QuoteForm() {
-  const [state, formAction] = useActionState(submitQuote, initialState)
-  const formRef = useRef<HTMLFormElement>(null)
+  const [state, setState] = useState<FormState>(initialState)
+  const [pending, setPending] = useState(false)
 
-  useEffect(() => {
-    if (state.success) {
-      formRef.current?.reset()
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    const name = String(formData.get("name") || "").trim()
+    const email = String(formData.get("email") || "").trim()
+    const message = String(formData.get("message") || "").trim()
+
+    if (!name || !email || !message) {
+      setState({
+        status: "error",
+        message: "Please fill in your name, email, and project details.",
+      })
+      return
     }
-  }, [state.success])
+
+    setPending(true)
+    setState(initialState)
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeFormData(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Quote request failed")
+      }
+
+      form.reset()
+      setState({
+        status: "success",
+        message: `Thank you, ${name}. Your quote request has been sent successfully.`,
+      })
+    } catch {
+      setState({
+        status: "error",
+        message:
+          "We could not send the request. Please email deebak@peyoteknitwear.com or call +91 9788852554.",
+      })
+    } finally {
+      setPending(false)
+    }
+  }
 
   return (
-    <form ref={formRef} action={formAction} className="flex flex-col gap-6">
+    <form
+      name="quote-request"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-6"
+    >
+      <input type="hidden" name="form-name" value="quote-request" />
+      <div className="hidden">
+        <Label htmlFor="bot-field">Do not fill this out</Label>
+        <Input id="bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
+      </div>
+
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <Label htmlFor="name">Full name *</Label>
@@ -135,12 +174,12 @@ export function QuoteForm() {
         <div
           role="status"
           className={`flex items-start gap-3 rounded-lg border p-4 text-sm ${
-            state.success
+            state.status === "success"
               ? "border-brand/30 bg-brand/5 text-brand"
               : "border-destructive/30 bg-destructive/5 text-destructive"
           }`}
         >
-          {state.success ? (
+          {state.status === "success" ? (
             <CheckCircle2 className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
           ) : (
             <AlertCircle className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
@@ -149,7 +188,24 @@ export function QuoteForm() {
         </div>
       ) : null}
 
-      <SubmitButton />
+      <Button
+        type="submit"
+        size="lg"
+        disabled={pending}
+        className="h-12 w-full gap-2 rounded-xl bg-brand-accent px-6 text-brand-accent-foreground hover:bg-brand-accent/90 sm:w-auto"
+      >
+        {pending ? (
+          <>
+            <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+            Sending...
+          </>
+        ) : (
+          <>
+            <Send className="size-4" aria-hidden="true" />
+            Send request
+          </>
+        )}
+      </Button>
     </form>
   )
 }
