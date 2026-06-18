@@ -21,7 +21,12 @@ const initialState: QuoteState = { success: false, message: "" }
 function SubmitButton() {
   const { pending } = useFormStatus()
   return (
-    <Button type="submit" size="lg" disabled={pending} className="w-full gap-2 sm:w-auto">
+    <Button
+      type="submit"
+      size="lg"
+      disabled={pending}
+      className="h-12 w-full gap-2 rounded-xl bg-brand-accent px-6 text-brand-accent-foreground hover:bg-brand-accent/90 sm:w-auto"
+    >
       {pending ? (
         <>
           <Loader2 className="size-4 animate-spin" aria-hidden="true" />

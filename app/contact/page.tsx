@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Building2, Clock, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react"
 import { QuoteForm } from "@/components/quote-form"
 
 export const metadata: Metadata = {
@@ -9,16 +10,25 @@ export const metadata: Metadata = {
 
 const directContacts = [
   {
-    label: "Phone",
+    icon: Phone,
+    label: "Call",
     value: "+91 9788852554",
-    note: "Call us directly for urgent inquiries",
+    note: "For urgent production or sampling inquiries",
     href: "tel:+919788852554",
   },
   {
+    icon: Mail,
     label: "Email",
     value: "deebak@peyoteknitwear.com",
-    note: "We respond to emails within 24 hours",
+    note: "Share tech packs, quantities, and timelines",
     href: "mailto:deebak@peyoteknitwear.com",
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    value: "Message our team",
+    note: "Fast follow-up for buyer conversations",
+    href: "https://wa.me/919788852554",
   },
 ]
 
@@ -30,7 +40,7 @@ const factories = [
       "Ettiveerampalayam, Perumanallur, Tiruppur,",
       "Tamil Nadu 641666",
     ],
-    gst: "GST: 33AAOCP8335Q1ZL",
+    gst: "33AAOCP8335Q1ZL",
   },
   {
     name: "Factory Location 2",
@@ -38,71 +48,141 @@ const factories = [
       "4/153, Sennimalaipalayam, Thekkalur, Avinashi,",
       "Tiruppur, Tamil Nadu 641654",
     ],
-    gst: "GST: 33AAOCP8335Q1ZL",
+    gst: "33AAOCP8335Q1ZL",
   },
+]
+
+const quoteSteps = [
+  "Product category and target quantity",
+  "Fabric, trim, labelling, and packing needs",
+  "Target delivery date and destination market",
 ]
 
 export default function ContactPage() {
   return (
     <section className="bg-background">
-      <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8 lg:py-20">
-        <div className="max-w-5xl">
-          <h1 className="reveal font-heading text-4xl font-extrabold tracking-tight text-brand lg:text-6xl">
-            Get in touch
-          </h1>
-          <p className="reveal mt-5 max-w-5xl text-xl leading-relaxed text-foreground/80 lg:text-2xl">
-            Share your manufacturing requirements or reach out to our team directly. We are ready
-            to help you scale your brand.
-          </p>
+      <div className="mx-auto max-w-7xl px-5 py-12 lg:px-8 lg:py-20">
+        <div className="grid items-end gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="reveal">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand-accent">
+              Contact Peyote Knitwear
+            </p>
+            <h1 className="mt-4 max-w-4xl font-heading text-4xl font-extrabold leading-tight tracking-tight text-foreground text-balance lg:text-6xl">
+              Start your manufacturing inquiry.
+            </h1>
+            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground lg:text-xl">
+              Send your requirements for babywear, socks, tights, or private-label production. Our
+              team will respond with practical next steps, timelines, and quotation details.
+            </p>
+          </div>
+
+          <div className="reveal rounded-3xl border border-border bg-card p-6 shadow-xl shadow-brand/5 lg:p-8">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                  Response
+                </p>
+                <p className="mt-2 font-heading text-2xl font-extrabold text-foreground">
+                  Within 24h
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                  Location
+                </p>
+                <p className="mt-2 font-heading text-2xl font-extrabold text-foreground">
+                  Tiruppur
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                  Capacity
+                </p>
+                <p className="mt-2 font-heading text-2xl font-extrabold text-foreground">
+                  100k/mo
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="reveal mt-12 h-px w-full bg-border" />
-
-        <div className="mt-12 grid gap-8 xl:grid-cols-[0.72fr_1.48fr]">
-          <div className="space-y-8">
-            <section>
-              <p className="reveal text-sm font-bold uppercase tracking-[0.14em] text-[#97a4be]">
-                Direct contact
-              </p>
-              <div className="mt-5 space-y-5">
-                {directContacts.map((item) => (
-                  <article
-                    key={item.label}
-                    className="reveal rounded-2xl border border-[#cfd9e6] bg-card p-7 shadow-[0_8px_24px_rgba(13,40,84,0.04)]"
-                  >
-                    <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#97a4be]">
-                      {item.label}
-                    </p>
-                    <a
-                      href={item.href}
-                      className="mt-3 block break-words text-2xl font-extrabold text-black"
-                    >
-                      {item.value}
-                    </a>
-                    <p className="mt-3 text-lg leading-relaxed text-[#93a0b8]">{item.note}</p>
-                  </article>
-                ))}
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {directContacts.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target={item.href.startsWith("https") ? "_blank" : undefined}
+              rel={item.href.startsWith("https") ? "noopener noreferrer" : undefined}
+              className="reveal group rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-xl hover:shadow-brand/5"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex size-12 items-center justify-center rounded-2xl bg-secondary text-brand transition-colors group-hover:bg-brand group-hover:text-brand-foreground">
+                  <item.icon className="size-6" aria-hidden="true" />
+                </div>
+                <span className="rounded-full bg-brand-accent/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand-accent">
+                  {item.label}
+                </span>
               </div>
+              <p className="mt-5 break-words font-heading text-xl font-extrabold text-foreground">
+                {item.value}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.note}</p>
+            </a>
+          ))}
+        </div>
+
+        <div className="mt-16 grid gap-8 xl:grid-cols-[0.85fr_1.15fr]">
+          <div className="space-y-8">
+            <section className="reveal rounded-3xl border border-border bg-secondary/60 p-7 lg:p-8">
+              <div className="flex items-center gap-3">
+                <div className="flex size-11 items-center justify-center rounded-2xl bg-background text-brand">
+                  <Clock className="size-5" aria-hidden="true" />
+                </div>
+                <h2 className="font-heading text-2xl font-extrabold text-foreground">
+                  For a faster quote
+                </h2>
+              </div>
+              <ul className="mt-6 space-y-4">
+                {quoteSteps.map((step) => (
+                  <li key={step} className="flex gap-3 text-sm font-semibold text-foreground">
+                    <ShieldCheck
+                      className="mt-0.5 size-5 shrink-0 text-brand-accent"
+                      aria-hidden="true"
+                    />
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ul>
             </section>
 
             <section>
-              <p className="reveal text-sm font-bold uppercase tracking-[0.14em] text-[#97a4be]">
+              <p className="reveal text-sm font-semibold uppercase tracking-[0.2em] text-brand-accent">
                 Factory locations
               </p>
               <div className="mt-5 space-y-5">
                 {factories.map((factory) => (
                   <article
                     key={factory.name}
-                    className="reveal rounded-2xl border border-[#cfd9e6] bg-card p-7 shadow-[0_8px_24px_rgba(13,40,84,0.04)]"
+                    className="reveal rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:border-brand/30 hover:shadow-xl hover:shadow-brand/5"
                   >
-                    <h2 className="text-2xl font-extrabold text-brand">{factory.name}</h2>
-                    <div className="mt-4 space-y-1 text-lg leading-relaxed text-foreground/75">
-                      {factory.lines.map((line) => (
-                        <p key={line}>{line}</p>
-                      ))}
+                    <div className="flex items-start gap-4">
+                      <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-secondary text-brand">
+                        <MapPin className="size-5" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <h3 className="font-heading text-xl font-extrabold text-foreground">
+                          {factory.name}
+                        </h3>
+                        <div className="mt-3 space-y-1 text-sm leading-relaxed text-muted-foreground">
+                          {factory.lines.map((line) => (
+                            <p key={line}>{line}</p>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                    <div className="mt-5 inline-flex rounded-2xl bg-[#f1f3f8] px-4 py-3 text-xl font-extrabold tracking-[0.12em] text-[#19345f]">
-                      {factory.gst}
+                    <div className="mt-5 inline-flex max-w-full items-center gap-2 rounded-full bg-secondary px-4 py-2 text-sm font-bold tracking-[0.08em] text-foreground">
+                      <Building2 className="size-4 shrink-0 text-brand" aria-hidden="true" />
+                      <span className="truncate">GST: {factory.gst}</span>
                     </div>
                   </article>
                 ))}
@@ -110,14 +190,19 @@ export default function ContactPage() {
             </section>
           </div>
 
-          <section className="reveal rounded-2xl border border-[#cfd9e6] bg-card p-8 shadow-[0_12px_28px_rgba(13,40,84,0.05)] lg:p-10">
-            <h2 className="font-heading text-4xl font-extrabold tracking-tight text-brand">
-              Request a quote
-            </h2>
-            <p className="mt-4 max-w-4xl text-xl leading-relaxed text-foreground/75">
-              Fill in the details below and our team will prepare a comprehensive quote including
-              pricing, minimum order quantities, and production timelines.
-            </p>
+          <section className="reveal rounded-3xl border border-border bg-card p-6 shadow-2xl shadow-brand/10 lg:p-8 xl:p-10">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand-accent">
+                Request a quote
+              </p>
+              <h2 className="mt-3 font-heading text-3xl font-extrabold tracking-tight text-foreground lg:text-4xl">
+                Tell us what you want to produce.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground lg:text-lg">
+                Add as much detail as you have. We can help clarify fabric, MOQ, pricing, packaging,
+                sampling, and production timelines after reviewing your inquiry.
+              </p>
+            </div>
             <div className="mt-8">
               <QuoteForm />
             </div>
