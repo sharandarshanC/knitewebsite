@@ -52,7 +52,7 @@ export function QuoteForm() {
     setState(initialState)
 
     try {
-      const response = await fetch("/", {
+      const response = await fetch("/__forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encodeFormData(formData),
@@ -82,8 +82,6 @@ export function QuoteForm() {
     <form
       name="quote-request"
       method="POST"
-      data-netlify="true"
-      data-netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
       className="flex flex-col gap-6"
     >
